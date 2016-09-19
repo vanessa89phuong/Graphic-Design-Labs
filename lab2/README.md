@@ -1,4 +1,4 @@
 ### Name: Van Phuong
-    ###   Karry Theberge
+###   Karry Theberge
 ### COS 452
 ### Lab3
