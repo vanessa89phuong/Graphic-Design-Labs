@@ -8,7 +8,7 @@ var gl;
 
 var points = [];
 
-var NumTimesToSubdivide = 1;
+var NumTimesToSubdivide = 5;
 
 window.onload = function init()
 {
@@ -56,10 +56,6 @@ window.onload = function init()
     gl.vertexAttribPointer( vPosition, 2, gl.FLOAT, false, 0, 0 );
     gl.enableVertexAttribArray( vPosition );
 
-    program.vertexColorAttribute = gl.getAttribLocation(program, "aVertexColor");
-    gl.enableVertexAttribArray(program.vertexColorAttribute);
-    initBuffers();
-
     render();
 };
 
@@ -83,22 +79,18 @@ function divideTriangle( c03, c33, c30, c00, count )
 
         var ab = mix( c03, c33, 0.33 );
         var ac = mix( c03, c30, 0.33 );
-        var ac1 = mix( c03, c30, 0.25 );
         var ad = mix( c03, c00, 0.33 );
 
         var ba = mix( c33, c03, 0.33 );
         var bc = mix( c33, c30, 0.33 );
         var bd = mix( c33, c00, 0.33 );
-        var bd1 = mix( c33, c00, 0.25);
 
         var ca = mix( c30, c03, 0.33 );
-        var ca1 = mix( c30, c03, 0.25 );
-        var cb = mix( c30, c33, 0.33 );
+        var cb = mix( c30, c33, 0.33);
         var cd = mix( c30, c00, 0.33 );
 
         var da = mix( c00, c03, 0.33 );
         var db = mix( c00, c33, 0.33 );
-        var db1 = mix( c00, c33, 0.25 );
         var dc = mix( c00, c30, 0.33 );
 
 
@@ -107,10 +99,15 @@ function divideTriangle( c03, c33, c30, c00, count )
         --count;
 
         // three new triangles
-        divideTriangle( ac1, bd1, ca1, db1, count );
-        divideTriangle( ac, bd, ca, db, count );
 
-
+        divideTriangle( c03, ab, ac, ad, count );
+        divideTriangle( ab, ba, bd, ac, count );
+        divideTriangle( ba, c33, bc, bd, count );
+        divideTriangle( bd, bc, cb, ca, count );
+        divideTriangle( ca, cb, c30, cd, count );
+        divideTriangle( db, ca, cd, dc, count );
+        divideTriangle( da, db, dc, c00, count );
+        divideTriangle( ad, ac, db, da, count );
     }
 }
 
