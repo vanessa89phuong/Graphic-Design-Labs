@@ -1,5 +1,5 @@
 ##COS452
-###Lab8
+###Lab7
 
 ###Srinivasa Natarajan
 ###Daniel Dusabimana
